@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>System Login | CyberNotes</title>
+    <style>
+        body { background-color: #0f051d; }
+        .neon-input {
+            background: #1a0b2e;
+            border: 1px solid #7e22ce;
+            color: #e9d5ff;
+            box-shadow: inset 0 0 5px #7e22ce;
+        }
+        .neon-border { box-shadow: 0 0 15px #a855f7; }
+    </style>
+</head>
+<body class="font-mono text-purple-200 flex items-center justify-center h-screen p-6">
+
+    <div class="max-w-md w-full bg-purple-950/40 border border-purple-500/50 p-8 rounded-2xl shadow-[0_0_30px_rgba(126,34,206,0.3)]">
+        <h1 class="text-3xl font-black text-center mb-8 neon-text uppercase italic tracking-tighter text-purple-400">
+            User Authentication
+        </h1>
+
+<form method="POST" class="space-y-6">
+    {% csrf_token %}
+
+    <input type="hidden" name="next" value="{{ next }}">
+
+    {% if form.errors %}
+        <div class="bg-red-500/20 border border-red-500 text-red-200 p-3 rounded text-xs mb-4">
+            Invalid username or password
+        </div>
+    {% endif %}
+
+    <div>
+        <label class="block text-xs uppercase tracking-widest text-purple-400 mb-2">
+            Username
+        </label>
+
+        <input type="text"
+               name="username"
+               class="w-full p-3 rounded-lg neon-input"
+               required>
+    </div>
+
+    <div>
+        <label class="block text-xs uppercase tracking-widest text-purple-400 mb-2">
+            Password
+        </label>
+
+        <input type="password"
+               name="password"
+               class="w-full p-3 rounded-lg neon-input"
+               required>
+    </div>
+
+    <button type="submit"
+            class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg">
+        Login
+    </button>
+</form>
+
+    </div>
+
+</body>
+</html>

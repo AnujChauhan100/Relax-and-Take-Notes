@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{{ note.title }} | CyberNotes</title>
+    <style>
+        body { background-color: #0f051d; }
+        .neon-text { text-shadow: 0 0 10px #a855f7; }
+    </style>
+</head>
+<body class="font-mono text-purple-200 p-6 md:p-12">
+
+<div class="flex justify-between items-center mb-10">
+
+    <!-- LEFT SIDE -->
+    <div class="flex items-center gap-4">
+
+        <a href="{% url 'index' %}"
+           class="group flex items-center justify-center w-11 h-11 rounded-full border border-purple-500/30 bg-purple-950/40 hover:border-purple-400 hover:bg-purple-900/40 transition-all duration-300">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-5 h-5 text-purple-400 group-hover:text-purple-200 transition-colors"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 stroke-width="2">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+
+        <div>
+            <p class="text-purple-500 text-xs uppercase tracking-[0.3em]">
+                Logged in as
+            </p>
+
+            <p class="text-purple-300 font-bold">
+                {{ request.user.username }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <form method="POST"
+          action="{% url 'logout' %}"
+          class="relative group">
+
+        {% csrf_token %}
+
+        <button type="submit"
+            class="flex items-center justify-center w-11 h-11 rounded-full border border-purple-500/30 bg-purple-950/40 hover:border-red-400/60 hover:bg-red-500/10 transition-all duration-300">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     class="w-4 h-4 text-purple-400 group-hover:text-red-400 transition-colors"
+     fill="none"
+     viewBox="0 0 24 24"
+     stroke="currentColor"
+     stroke-width="2">
+     
+    <path stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V7m0 0V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h5a2 2 0 002-2v-1" />
+</svg>
+        </button>
+
+        <!-- TOOLTIP -->
+        <div class="absolute right-0 mt-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            <div class="bg-purple-950 border border-purple-500/30 text-purple-300 text-xs px-3 py-1 rounded-lg whitespace-nowrap shadow-lg">
+                Logout
+            </div>
+        </div>
+
+    </form>
+
+</div>
+    
+    <!-- Delete Button -->
+    <a href="{% url 'delete_note' note.id %}" 
+       class="absolute top-6 right-6 text-purple-400 hover:text-red-400 transition-colors text-sm tracking-widest">
+        [DELETE]
+    </a>
+            <h1 class="text-4xl md:text-4xl font-black text-purple-400 mb-6 neon-text uppercase italic tracking-tighter">
+                {{ note.title }}
+            </h1>
+            
+            <div class="text-purple-500 text-xs mb-10 tracking-widest uppercase">
+                Created on: {{ note.created_at }}
+            </div>
+
+            <div class="text-lg md:text-xl leading-relaxed text-purple-100/90">
+                {{ note.content }}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
