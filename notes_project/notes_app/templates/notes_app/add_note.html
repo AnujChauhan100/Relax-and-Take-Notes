@@ -41,51 +41,72 @@
                       d="M15 19l-7-7 7-7" />
             </svg>
         </a>
+{% if request.user.is_authenticated %}
 
-        <div>
-            <p class="text-purple-500 text-xs uppercase tracking-[0.3em]">
-                Logged in as
-            </p>
+    <div>
+        <p class="text-purple-500 text-xs uppercase tracking-[0.3em]">
+            Logged in as
+        </p>
 
-            <p class="text-purple-300 font-bold">
-                {{ request.user.username }}
-            </p>
-        </div>
-
+        <p class="text-purple-300 font-bold">
+            {{ request.user.username }}
+        </p>
     </div>
 
-    <!-- RIGHT SIDE -->
-    <form method="POST"
-          action="{% url 'logout' %}"
-          class="relative group">
+{% else %}
 
-        {% csrf_token %}
+    <div>
+        <p class="text-yellow-400 text-xs uppercase tracking-[0.3em]">
+            ⚡ Temporary Mode
+        </p>
 
-        <button type="submit"
-            class="flex items-center justify-center w-11 h-11 rounded-full border border-purple-500/30 bg-purple-950/40 hover:border-red-400/60 hover:bg-red-500/10 transition-all duration-300">
+        <p class="text-purple-400 text-sm">
+            <a href="{% url 'login' %}?next={{ request.path }}"
+                class="text-purple-300 underline hover:text-purple-200 transition-colors">
+                Sign in
+            </a>
+            to save notes permanently
+        </p>
+    </div>
 
-<svg xmlns="http://www.w3.org/2000/svg"
-     class="w-4 h-4 text-purple-400 group-hover:text-red-400 transition-colors"
-     fill="none"
-     viewBox="0 0 24 24"
-     stroke="currentColor"
-     stroke-width="2">
-     
-    <path stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V7m0 0V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h5a2 2 0 002-2v-1" />
-</svg>
+{% endif %}
+    </div>
 
-        </button>
+<!-- RIGHT SIDE -->
 
-        <!-- TOOLTIP -->
-        <div class="absolute right-0 mt-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            <div class="bg-purple-950 border border-purple-500/30 text-purple-300 text-xs px-3 py-1 rounded-lg whitespace-nowrap shadow-lg">
-                Logout
-            </div>
+{% if request.user.is_authenticated %}
+<form method="POST"
+      action="{% url 'logout' %}"
+      class="relative group">
+
+    {% csrf_token %}
+
+    <button type="submit"
+        class="flex items-center justify-center w-11 h-11 rounded-full border border-purple-500/30 bg-purple-950/40 hover:border-red-400/60 hover:bg-red-500/10 transition-all duration-300">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-4 h-4 text-purple-400 group-hover:text-red-400 transition-colors"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor"
+             stroke-width="2">
+
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V7m0 0V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h5a2 2 0 002-2v-1" />
+        </svg>
+
+    </button>
+
+    <!-- TOOLTIP -->
+    <div class="absolute right-0 mt-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        <div class="bg-purple-950 border border-purple-500/30 text-purple-300 text-xs px-3 py-1 rounded-lg whitespace-nowrap shadow-lg">
+            Logout
         </div>
+    </div>
 
-    </form>
+</form>
+{% endif %}
 
 </div>
 

@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('add/', views.add_note, name='add_note'),
-    path('delete/<int:note_id>/', views.delete_note, name='delete_note'),
-    path('note/<int:note_id>/', views.note_detail, name='note_detail'), # New: detail page
+    path('delete/<str:note_id>/', views.delete_note, name='delete_note'),
+    path('note/<str:note_id>/', views.note_detail, name='note_detail'),
+    path('signup/', views.signup, name='signup'),  # Add this line
 ]
