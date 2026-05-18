@@ -118,14 +118,25 @@
                         {{ note.content }}
                     </p>
 
-                    <!-- Bottom section -->
-                    <div class="mt-auto flex justify-between items-center">
-                        <div class="text-xs text-purple-500 italic">
-                            {{ note.created_at|date:"Y-m-d H:i" }}
-                        </div>
-                        <a href="{% url 'note_detail' note.id %}" class="text-xs text-purple-400 hover:underline font-bold">READ MORE</a>
-                    </div>
-                </div>
+<!-- Bottom section -->
+<div class="mt-auto flex justify-between items-center">
+    <!-- Date on the left -->
+    <div class="text-xs text-purple-500 italic">
+        {{ note.created_at|date:"Y-m-d H:i" }}
+    </div>
+
+    <!-- Links on the right: Grouped together with a gap -->
+    <div class="flex items-center gap-4">
+        <a href="{% url 'edit_note' note.id %}" 
+           class="text-xs text-purple-400 hover:underline font-bold uppercase">
+            Edit
+        </a>
+        <a href="{% url 'note_detail' note.id %}" 
+           class="text-xs text-purple-400 hover:underline font-bold uppercase">
+            Read More
+        </a>
+    </div>
+</div>
             {% empty %}
                 <!-- This shows if the database is empty -->
                 <div class="col-span-full text-center py-20 border-2 border-dashed border-purple-800 rounded-xl">

@@ -127,3 +127,40 @@ def signup(request):
         form = UserCreationForm()
     
     return render(request, 'registration/signup.html', {'form': form})
+
+def edit_note(request, note_id):
+    if request.user.is_authenticated:
+        # DATABASE LOGIC
+        note = get_object_or_404(Note, id=note_id, user=request.user)
+        if request.method == 'POST':
+            note.title = request.POST.get('title', note.title)
+            note.content = request.POST.get('content', note.content)
+            note.save()
+            return redirect('note_detail', note_id=note.id)
+    else:
+        # SESSION LOGIC
+        session_notes = request.session.get('anonymous_notes', [])
+        # Find the note in the session list
+        note_index = next((i for i, n in enumerate(session_notes) if n['id'] == str(note_id)), None)
+        
+        if note_index is None:
+            return redirect('index')
+            
+        note_data = session_notes[note_index]
+
+        if request.method == 'POST':
+            session_notes[note_index]['title'] = request.POST.get('title', note_data['title'])
+            session_notes[note_index]['content'] = request.POST.get('content', note_data['content'])
+            request.session['anonymous_notes'] = session_notes
+            
+            # Create a fake object to pass to the template for the redirect/detail view
+            return redirect('note_detail', note_id=note_id)
+
+        # Wrap session data in a simple object so the template can use note.title
+        note = type('Note', (), {
+            'id': note_data['id'],
+            'title': note_data.get('title', 'Untitled'),
+            'content': note_data.get('content', ''),
+        })
+
+    return render(request, 'notes_app/edit_note.html', {'note': note})

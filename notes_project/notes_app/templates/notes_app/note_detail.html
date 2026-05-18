@@ -101,24 +101,25 @@
 {% endif %}
 </div>
     
-    <!-- Delete Button -->
-<!-- DELETE BUTTON -->
+<!-- BUTTONS SECTION: Refined Synergy & Spacing -->
+<div class="flex justify-end items-center gap-12 mb-8">
 
-    <div class="flex justify-end mb-0">
+    <!-- EDIT BUTTON: Now uses Yellow hover for "Attention" instead of Red -->
+    <a href="{% url 'edit_note' note.id %}" 
+       class="text-purple-400 hover:text-yellow-400 transition-all duration-300 text-sm tracking-widest font-bold uppercase">
+       [Edit]
+    </a>
 
-        <form method="POST"
-            action="{% url 'delete_note' note.id %}">
+    <!-- DELETE BUTTON: Keeps Red hover for "Danger" -->
+    <form method="POST" action="{% url 'delete_note' note.id %}" class="m-0">
+        {% csrf_token %}
+        <button type="submit"
+                class="text-purple-400 hover:text-red-500 transition-all duration-300 text-sm tracking-widest font-bold uppercase">
+            [Delete]
+        </button>
+    </form>
 
-            {% csrf_token %}
-
-            <button type="submit"
-                    class="text-purple-400 hover:text-red-400 transition-colors text-sm tracking-widest">
-                [DELETE]
-            </button>
-
-        </form>
-
-    </div>
+</div>
             <h1 class="text-4xl md:text-4xl font-black text-purple-400 mb-6 neon-text uppercase italic tracking-tighter">
                 {{ note.title }}
             </h1>

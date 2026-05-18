@@ -6,5 +6,6 @@ urlpatterns = [
     path('add/', views.add_note, name='add_note'),
     path('delete/<str:note_id>/', views.delete_note, name='delete_note'),
     path('note/<str:note_id>/', views.note_detail, name='note_detail'),
+    path('edit/<str:note_id>/', views.edit_note, name='edit_note'),  # <--- Add this
     path('signup/', views.signup, name='signup'),  # Add this line
 ]
